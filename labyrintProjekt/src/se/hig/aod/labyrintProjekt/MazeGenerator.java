@@ -7,8 +7,8 @@ import java.util.Random;
 
 public class MazeGenerator {
 
-    private int height = 29;
-    private int width = 29;
+    private int height = 9;
+    private int width = 9;
     private final ArrayList<String> DIRECTIONS = new ArrayList<>(
             Arrays.asList("NORTH", "SOUTH", "WEST", "EAST"));
 
@@ -31,12 +31,12 @@ public class MazeGenerator {
             }
         }
 
-        int startX = findStartPoint();
-        int startY = findStartPoint();
-
-        walls[startX][startY] = " S ";
+        int startX = findRandomPoint();
+        int startY = findRandomPoint();
 
         dig(startX, startY);
+        
+        walls[startX][startY] = " S";
 
     }
 
@@ -90,7 +90,7 @@ public class MazeGenerator {
 
     }
 
-    private int findStartPoint() {
+    private int findRandomPoint() {
         boolean oddNumber = false;
         int hold = 0;
         while (!oddNumber) {
