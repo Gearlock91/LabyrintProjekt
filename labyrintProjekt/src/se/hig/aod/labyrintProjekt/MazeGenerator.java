@@ -7,8 +7,8 @@ import java.util.Random;
 
 public class MazeGenerator {
 
-    private int height = 19;
-    private int width = 19;
+    private int height = 99;
+    private int width = 99;
     private final ArrayList<String> DIRECTIONS = new ArrayList<>(
             Arrays.asList("NORTH", "SOUTH", "WEST", "EAST"));
 
@@ -34,7 +34,7 @@ public class MazeGenerator {
         int startX = findStartPoint();
         int startY = findStartPoint();
 
-        walls[startX][startY] = " 0 ";
+        walls[startX][startY] = " S ";
 
         dig(startX, startY);
 
@@ -49,9 +49,9 @@ public class MazeGenerator {
                 // Whether 2 cells up is out or not
                 if (x - 2 <= 0)
                     continue;
-                if (walls[x - 2][y] != " 0 ") {
-                    walls[x - 2][y] = " 0 ";
-                    walls[x - 1][y] = " 0 ";
+                if (walls[x - 2][y] != "   ") {
+                    walls[x - 2][y] = "   ";
+                    walls[x - 1][y] = "   ";
                     dig(x - 2, y);
                 }
                 break;
@@ -59,9 +59,9 @@ public class MazeGenerator {
                 // Whether 2 cells to the right is out or not
                 if (y + 2 >= width - 1)
                     continue;
-                if (walls[x][y + 2] != " 0 ") {
-                    walls[x][y + 2] = " 0 ";
-                    walls[x][y + 1] = " 0 ";
+                if (walls[x][y + 2] != "   ") {
+                    walls[x][y + 2] = "   ";
+                    walls[x][y + 1] = "   ";
                     dig(x, y + 2);
                 }
                 break;
@@ -69,9 +69,9 @@ public class MazeGenerator {
                 // Whether 2 cells down is out or not
                 if (x + 2 >= height - 1)
                     continue;
-                if (walls[x + 2][y] != " 0 ") {
-                    walls[x + 2][y] = " 0 ";
-                    walls[x + 1][y] = " 0 ";
+                if (walls[x + 2][y] != "   ") {
+                    walls[x + 2][y] = "   ";
+                    walls[x + 1][y] = "   ";
                     dig(x + 2, y);
                 }
                 break;
@@ -79,9 +79,9 @@ public class MazeGenerator {
                 // Whether 2 cells to the left is out or not
                 if (y - 2 <= 0)
                     continue;
-                if (walls[x][y - 2] != " 0 ") {
-                    walls[x][y - 2] = " 0 ";
-                    walls[x][y - 1] = " 0 ";
+                if (walls[x][y - 2] != "   ") {
+                    walls[x][y - 2] = "   ";
+                    walls[x][y - 1] = "   ";
                     dig(x, y - 2);
                 }
                 break;
