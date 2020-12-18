@@ -59,6 +59,7 @@ public class MazeGenerator {
                 // Whether 2 cells west is out or not
                 if (x - 2 <= 0)
                     continue;
+                // Wheter 2 cells west is another room  or not
                 if (maze[x - 2][y] != "  ") {
                     maze[x - 2][y] = "  ";
                     maze[x - 1][y] = "  ";
