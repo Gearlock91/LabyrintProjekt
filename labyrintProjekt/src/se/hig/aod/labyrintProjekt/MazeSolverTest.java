@@ -21,8 +21,8 @@ class MazeSolverTest {
     @Test
     void test() {
         MazeSolver solver = new MazeSolver();
-        
-        solver.SolveMaze(generator.getNodes(), generator.getKeys());
+        generator.printTestMaze();
+        solver.SolveMaze(generator.getMaze());
     }
 
 }

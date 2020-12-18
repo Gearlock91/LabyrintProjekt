@@ -3,10 +3,9 @@ package se.hig.aod.labyrintProjekt;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+
+import java.util.List;
 import java.util.Random;
-import java.util.Stack;
 
 public class MazeGenerator {
 
@@ -14,10 +13,13 @@ public class MazeGenerator {
     private int width = 9;
     private final ArrayList<String> DIRECTIONS = new ArrayList<>(
             Arrays.asList("NORTH", "SOUTH", "WEST", "EAST"));
-    private Map<String, Integer> steps = new HashMap<>();
-    private String keyLetter = "";
-    private int keyIntX = 0;
-    private int keyIntY = 0;
+   // private Map<String, Integer> steps = new HashMap<>();
+    
+    private List<Integer> steps = new ArrayList<Integer>();
+    
+   // private String keyLetter = "";
+   // private int keyIntX = 0;
+   // private int keyIntY = 0;
     private String[][] maze;
 
     public MazeGenerator(/* int width, int height */) {
@@ -41,13 +43,13 @@ public class MazeGenerator {
         int startY = findRandomPoint();
         
       
-        steps.put("x" + keyIntX, startX);
-        steps.put("y" + keyIntY, startY );
-
+        steps.add(startX);
+        steps.add(startY);
+        
         dig(startX, startY);
 
         maze[startX][startY] = " S";
-        maze[steps.get("x" + keyIntX)][steps.get("y" + keyIntY)] = " E";
+        maze[steps.get(steps.size() - 2)][steps.get(steps.size() - 1)] = " E";
     }
 
     private void dig(int x, int y) {
@@ -63,8 +65,12 @@ public class MazeGenerator {
                 if (maze[x - 2][y] != "  ") {
                     maze[x - 2][y] = "  ";
                     maze[x - 1][y] = "  ";
-                    keyIntX++;
-                    steps.put("x" + keyIntX, x - 2);
+                    //keyIntX++;
+                    //steps.put("x" + keyIntX, x - 2);
+                    steps.add(x - 2);
+                    steps.add(y);
+                    steps.add(x - 1);
+                    steps.add(y);       
                     dig(x - 2, y);
                 }
                 break;
@@ -74,8 +80,12 @@ public class MazeGenerator {
                 if (maze[x][y + 2] != "  ") {
                     maze[x][y + 2] = "  ";
                     maze[x][y + 1] = "  ";
-                    keyIntY++;
-                    steps.put("y" + keyIntY, y + 2);
+//                    keyIntY++;
+//                    steps.put("y" + keyIntY, y + 2);
+                    steps.add(x);
+                    steps.add(y + 2);
+                    steps.add(x);
+                    steps.add(y + 1);  
                     dig(x, y + 2);
                 }
                 break;
@@ -85,8 +95,12 @@ public class MazeGenerator {
                 if (maze[x + 2][y] != "  ") {
                     maze[x + 2][y] = "  ";
                     maze[x + 1][y] = "  ";
-                    keyIntX++;
-                    steps.put("x" + keyIntX, x + 2);
+//                    keyIntX++;
+//                    steps.put("x" + keyIntX, x + 2);
+                    steps.add(x + 2);
+                    steps.add(y);
+                    steps.add(x + 1);
+                    steps.add(y);  
                     dig(x + 2, y);
                 }
                 break;
@@ -96,8 +110,12 @@ public class MazeGenerator {
                 if (maze[x][y - 2] != "  ") {
                     maze[x][y - 2] = "  ";
                     maze[x][y - 1] = "  ";
-                    keyIntY++;
-                    steps.put("y" + keyIntY, y - 2);
+//                    keyIntY++;
+//                    steps.put("y" + keyIntY, y - 2);
+                    steps.add(x);
+                    steps.add(y - 2);
+                    steps.add(x);
+                    steps.add(y - 1);  
                     dig(x, y - 2);
                 }
                 break;
@@ -129,12 +147,12 @@ public class MazeGenerator {
 
     }
     
-    public Map<String, Integer> getNodes() {
-        return steps;
+    
+    public String[][] getMaze(){
+        return maze;
     }
     
-    public int[] getKeys() {
-        int[] keys = {keyIntX, keyIntY};
-        return keys;
-    }
+//    public List<Integer> getCords() {
+//        return steps;
+//    }
 }
