@@ -3,15 +3,20 @@ package se.hig.aod.labyrintProjekt;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Random;
+import java.util.Stack;
 
 public class MazeGenerator {
 
-    private int height = 9;
-    private int width = 9;
+    private int height = 19;
+    private int width = 19;
     private final ArrayList<String> DIRECTIONS = new ArrayList<>(
             Arrays.asList("NORTH", "SOUTH", "WEST", "EAST"));
-
+    private HashMap<String, Integer> steps = new HashMap<>();
+    private String keyLetter = "";
+    private int keyIntX = 0;
+    private int keyIntY = 0;
     private String[][] walls;
 
     public MazeGenerator(/* int width, int height */) {
@@ -35,9 +40,10 @@ public class MazeGenerator {
         int startY = findRandomPoint();
 
         dig(startX, startY);
-        
+
         walls[startX][startY] = " S";
 
+        walls[steps.get("x" + keyIntX)][steps.get("y" + keyIntY)] = " E";
     }
 
     private void dig(int x, int y) {
@@ -52,6 +58,8 @@ public class MazeGenerator {
                 if (walls[x - 2][y] != "  ") {
                     walls[x - 2][y] = "  ";
                     walls[x - 1][y] = "  ";
+                    keyIntX++;
+                    steps.put("x" + keyIntX, x - 2);
                     dig(x - 2, y);
                 }
                 break;
@@ -62,6 +70,8 @@ public class MazeGenerator {
                 if (walls[x][y + 2] != "  ") {
                     walls[x][y + 2] = "  ";
                     walls[x][y + 1] = "  ";
+                    keyIntY++;
+                    steps.put("y" + keyIntY, y + 2);
                     dig(x, y + 2);
                 }
                 break;
@@ -72,6 +82,8 @@ public class MazeGenerator {
                 if (walls[x + 2][y] != "  ") {
                     walls[x + 2][y] = "  ";
                     walls[x + 1][y] = "  ";
+                    keyIntX++;
+                    steps.put("x" + keyIntX, x + 2);
                     dig(x + 2, y);
                 }
                 break;
@@ -82,6 +94,8 @@ public class MazeGenerator {
                 if (walls[x][y - 2] != "  ") {
                     walls[x][y - 2] = "  ";
                     walls[x][y - 1] = "  ";
+                    keyIntY++;
+                    steps.put("y" + keyIntY, y - 2);
                     dig(x, y - 2);
                 }
                 break;
