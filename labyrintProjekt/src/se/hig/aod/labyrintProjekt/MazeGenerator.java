@@ -9,8 +9,8 @@ import java.util.Random;
 
 public class MazeGenerator {
 
-    private int height = 9;
-    private int width = 9;
+    private int height = 19;
+    private int width = 19;
     private final ArrayList<String> DIRECTIONS = new ArrayList<>(
             Arrays.asList("NORTH", "SOUTH", "WEST", "EAST"));
    // private Map<String, Integer> steps = new HashMap<>();
