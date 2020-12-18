@@ -4,20 +4,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.Stack;
 
 public class MazeGenerator {
 
-    private int height = 19;
-    private int width = 19;
+    private int height = 9;
+    private int width = 9;
     private final ArrayList<String> DIRECTIONS = new ArrayList<>(
             Arrays.asList("NORTH", "SOUTH", "WEST", "EAST"));
-    private HashMap<String, Integer> steps = new HashMap<>();
+    private Map<String, Integer> steps = new HashMap<>();
     private String keyLetter = "";
     private int keyIntX = 0;
     private int keyIntY = 0;
-    private String[][] walls;
+    private String[][] maze;
 
     public MazeGenerator(/* int width, int height */) {
         /*
@@ -25,25 +26,28 @@ public class MazeGenerator {
          * }else { //throw new InvalidSizeException }
          */
 
-        walls = new String[height][width];
+        maze = new String[width][height];
         createMaze();
     }
 
     private void createMaze() {
-        for (int i = 0; i < walls.length; i++) {
-            for (int j = 0; j < walls.length; j++) {
-                walls[i][j] = " X";
+        for (int i = 0; i < maze.length; i++) {
+            for (int j = 0; j < maze.length; j++) {
+                maze[i][j] = " X";
             }
         }
 
         int startX = findRandomPoint();
         int startY = findRandomPoint();
+        
+      
+        steps.put("x" + keyIntX, startX);
+        steps.put("y" + keyIntY, startY );
 
         dig(startX, startY);
 
-        walls[startX][startY] = " S";
-
-        walls[steps.get("x" + keyIntX)][steps.get("y" + keyIntY)] = " E";
+        maze[startX][startY] = " S";
+        maze[steps.get("x" + keyIntX)][steps.get("y" + keyIntY)] = " E";
     }
 
     private void dig(int x, int y) {
@@ -51,49 +55,46 @@ public class MazeGenerator {
         for (int i = 0; i < DIRECTIONS.size(); i++) {
 
             switch (DIRECTIONS.get(i)) {
-            case "NORTH": // Up
-                // Whether 2 cells up is out or not
+            case "WEST":
+                // Whether 2 cells west is out or not
                 if (x - 2 <= 0)
                     continue;
-                if (walls[x - 2][y] != "  ") {
-                    walls[x - 2][y] = "  ";
-                    walls[x - 1][y] = "  ";
+                if (maze[x - 2][y] != "  ") {
+                    maze[x - 2][y] = "  ";
+                    maze[x - 1][y] = "  ";
                     keyIntX++;
                     steps.put("x" + keyIntX, x - 2);
                     dig(x - 2, y);
                 }
                 break;
-            case "EAST": // Right
-                // Whether 2 cells to the right is out or not
+            case "SOUTH":
                 if (y + 2 >= width - 1)
                     continue;
-                if (walls[x][y + 2] != "  ") {
-                    walls[x][y + 2] = "  ";
-                    walls[x][y + 1] = "  ";
+                if (maze[x][y + 2] != "  ") {
+                    maze[x][y + 2] = "  ";
+                    maze[x][y + 1] = "  ";
                     keyIntY++;
                     steps.put("y" + keyIntY, y + 2);
                     dig(x, y + 2);
                 }
                 break;
-            case "SOUTH": // Down
-                // Whether 2 cells down is out or not
+            case "EAST": 
                 if (x + 2 >= height - 1)
                     continue;
-                if (walls[x + 2][y] != "  ") {
-                    walls[x + 2][y] = "  ";
-                    walls[x + 1][y] = "  ";
+                if (maze[x + 2][y] != "  ") {
+                    maze[x + 2][y] = "  ";
+                    maze[x + 1][y] = "  ";
                     keyIntX++;
                     steps.put("x" + keyIntX, x + 2);
                     dig(x + 2, y);
                 }
                 break;
-            case "WEST": // Left
-                // Whether 2 cells to the left is out or not
+            case "NORTH": 
                 if (y - 2 <= 0)
                     continue;
-                if (walls[x][y - 2] != "  ") {
-                    walls[x][y - 2] = "  ";
-                    walls[x][y - 1] = "  ";
+                if (maze[x][y - 2] != "  ") {
+                    maze[x][y - 2] = "  ";
+                    maze[x][y - 1] = "  ";
                     keyIntY++;
                     steps.put("y" + keyIntY, y - 2);
                     dig(x, y - 2);
@@ -118,12 +119,21 @@ public class MazeGenerator {
     }
 
     public void printTestMaze() {
-        for (int i = 0; i < walls.length; i++) {
-            for (int j = 0; j < walls.length; j++) {
-                System.out.print(walls[i][j]);
+        for (int i = 0; i < maze.length; i++) {
+            for (int j = 0; j < maze.length; j++) {
+                System.out.print(maze[j][i]);
             }
             System.out.println();
         }
 
+    }
+    
+    public Map<String, Integer> getNodes() {
+        return steps;
+    }
+    
+    public int[] getKeys() {
+        int[] keys = {keyIntX, keyIntY};
+        return keys;
     }
 }
