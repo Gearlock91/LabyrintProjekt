@@ -6,17 +6,22 @@ import java.util.List;
 public class MazeSolver {
 
     private List<MazeNode> path = new ArrayList<MazeNode>();
-    private List<MazeNode> unvisitedNodes = new ArrayList<MazeNode>();
     private final int INFINITY = Integer.MAX_VALUE;
     private MazeNode endNode;
 
+    /**
+     * Klassen som håller reda på den aktuella informationen om
+     * en specifik väg som är en väg i labyrinten.
+     * @author Andreas Roghe
+     * @version 2020-12-19
+     *
+     */
     private class MazeNode {
 
         private List<MazeNode> adj;
         private MazeNode prev;
         private int x;
         private int y;
-        private boolean visited;
         private int distance = 0;
 
         public MazeNode(int x, int y, int distance) {
@@ -28,10 +33,12 @@ public class MazeSolver {
     }
 
     public void solveMaze(String[][] maze) {
-        readMaze(maze);
+        MazeNode startNode = readMaze(maze);
+        dijkstras(maze, startNode);
+        printMaze(maze);
     }
 
-    private void readMaze(String[][] maze) {
+    private MazeNode readMaze(String[][] maze) {
         // find Start
 
         MazeNode start = null;
@@ -40,64 +47,36 @@ public class MazeSolver {
                 if (maze[i][j] == " S") {
                     start = new MazeNode(i, j, 0);
                 }
-                if (maze[i][j] == "  ") {
-                    unvisitedNodes.add(new MazeNode(i, j, INFINITY));
-                }
             }
         }
         start.prev = start;
-        dijkstras(maze, start);
-
-        printMaze(maze);
-    }
-
-    public void printMaze(String[][] maze) {
-
-        printPath(maze, endNode);
-
-        for (int i = 0; i < maze.length; i++) {
-            for (int j = 0; j < maze.length; j++) {
-                System.out.print(maze[j][i]);
-            }
-            System.out.println();
-        }
-    }
-
-    private void printPath(String[][] maze, MazeNode node) {
-        if (maze[node.x][node.y] == " S") {
-            return;
-        } else {
-            if (!(maze[node.x][node.y] == " E")) {
-                maze[node.x][node.y] = " *";
-            }
-            printPath(maze, node.prev);
-        }
+        return start;
     }
 
     private void dijkstras(String[][] maze, MazeNode start) {
-
-        start.visited = true;
         start.distance = 0;
         checkAdj(maze, start);
-        
+
         int min = INFINITY;
-        for(MazeNode endPoint : path) {
+        for (MazeNode endPoint : path) {
             if (endPoint.distance < min) {
                 min = endPoint.distance;
-                endNode = endPoint;    
+                endNode = endPoint;
             }
-            System.out.println(min);
         }
+        System.out.println("Steps from start to endpoint: " + min);
     }
 
-    public void checkAdj(String[][] maze, MazeNode node) {
-
+    private void checkAdj(String[][] maze, MazeNode node) {
+        // Avståndet från startpunkten till den aktuella noden.
         node.distance += node.prev.distance;
-
+        // Om vi hittar slutpunkten lägg till den i path och fortsätt
+        // sedan att kontrollera övriga noder.
         if (maze[node.x][node.y] == " E") {
             path.add(node);
             return;
         }
+        // Vi tittar om det finns en väg åt vänster,höger,uppåt samt nedåt.
         int left, right, up, down;
         left = node.x - 1;
         right = node.x + 1;
@@ -126,4 +105,28 @@ public class MazeSolver {
         }
 
     }
+
+    private void printPath(String[][] maze, MazeNode node) {
+        if (maze[node.x][node.y] == " S") {
+            return;
+        } else {
+            if (!(maze[node.x][node.y] == " E")) {
+                maze[node.x][node.y] = " *";
+            }
+            printPath(maze, node.prev);
+        }
+    }
+
+    public void printMaze(String[][] maze) {
+
+        printPath(maze, endNode);
+
+        for (int i = 0; i < maze.length; i++) {
+            for (int j = 0; j < maze.length; j++) {
+                System.out.print(maze[j][i]);
+            }
+            System.out.println();
+        }
+    }
+
 }

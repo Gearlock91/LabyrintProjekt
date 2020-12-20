@@ -1,6 +1,6 @@
 package se.hig.aod.labyrintProjekt;
 
-import static org.junit.jupiter.api.Assertions.*;
+
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 class MazeSolverTest {
     
     MazeGenerator generator = new MazeGenerator();
+    AldousBorderMazeGenerator aldousGenerator = new AldousBorderMazeGenerator(250);
 
     @BeforeEach
     void setUp() throws Exception {
@@ -21,8 +22,8 @@ class MazeSolverTest {
     @Test
     void test() {
         MazeSolver solver = new MazeSolver();
-        generator.printTestMaze();
-        solver.solveMaze(generator.getMaze());
+       
+        solver.solveMaze(aldousGenerator.getMaze());
   
     }
 
