@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 class AldousBorderMazeGeneratorTest {
     
-    AldousBorderMazeGenerator generator = new AldousBorderMazeGenerator(1000);
+    AldousBorderMazeGeneratorOLD generator = new AldousBorderMazeGeneratorOLD(1000);
 
     @BeforeEach
     void setUp() throws Exception {
