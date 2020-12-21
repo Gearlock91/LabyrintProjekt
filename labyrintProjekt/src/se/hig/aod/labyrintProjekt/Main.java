@@ -16,6 +16,7 @@ public class Main {
         MazeSolver ms = new MazeSolver();
        // ms.solveMaze(converter(labyrint));
         AldousBorderMazeGenerator am = new AldousBorderMazeGenerator(50);
+
         ms.solveMaze(am.getMaze());
         
     }
