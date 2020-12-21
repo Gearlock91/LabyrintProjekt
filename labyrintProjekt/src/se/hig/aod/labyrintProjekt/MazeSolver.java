@@ -34,7 +34,7 @@ public class MazeSolver {
 
     public void solveMaze(String[][] maze) {
         MazeNode startNode = readMaze(maze);
-        dijkstras(maze, startNode);
+        bruteForce(maze, startNode);
         printMaze(maze);
     }
 
@@ -53,7 +53,7 @@ public class MazeSolver {
         return start;
     }
 
-    private void dijkstras(String[][] maze, MazeNode start) {
+    private void bruteForce(String[][] maze, MazeNode start) {
         start.distance = 0;
         checkAdj(maze, start);
 
