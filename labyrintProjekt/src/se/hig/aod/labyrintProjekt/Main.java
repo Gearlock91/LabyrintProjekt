@@ -12,9 +12,11 @@ public class Main {
     public static void main(String[] args) {
         
     	String labyrint ="Labyrint/testLabyrint";
-    	converter(labyrint);
+    	//converter(labyrint);
         MazeSolver ms = new MazeSolver();
-        //ms.solveMaze(in);
+        ms.solveMaze(converter(labyrint));
+        AldousBorderMazeGenerator am = new AldousBorderMazeGenerator(8);
+        ms.solveMaze(am.getMaze());
         
     }
     private static String[][] converter(String labyrint){
@@ -47,11 +49,19 @@ public class Main {
     	System.out.println("Maze size: " + counter*counter);
     	int i = 0;
     
-		while (i <= maze.length) {
-    		for(int j = 0; j <= maze.length; j++) {
+		while (i < maze.length) {
+    		for(int j = 0; j < maze.length; j++) {
     			try {
     				char a = (char)inChar.read();
-    				System.out.print(a);
+    				if(a == '\r') {
+    					a = (char)inChar.read();
+    					if(a == '\n') {
+    						a = (char)inChar.read();
+    					}
+    				}
+    				char b = (char)inChar.read();
+    				maze[i][j] = a + "" + b;
+    				//System.out.print(a + "" + b);
     			} catch (IOException e) {
 			
     				e.printStackTrace();
@@ -60,11 +70,8 @@ public class Main {
     			//maze[i][j] = a;
     		}
     		i++;	
-    		
-    	}
-    	 
-		return null;
-    	
+    		//System.out.println();
+    	}   	 
+		return maze; 	
     }
-
 }

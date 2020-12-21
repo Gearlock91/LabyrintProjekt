@@ -44,7 +44,7 @@ public class MazeSolver {
         MazeNode start = null;
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze.length; j++) {
-                if (maze[i][j] == " S") {
+                if (maze[i][j].equals(" S")) {
                     start = new MazeNode(i, j, 0);
                 }
             }
@@ -72,7 +72,7 @@ public class MazeSolver {
         node.distance += node.prev.distance;
         // Om vi hittar slutpunkten lägg till den i path och fortsätt
         // sedan att kontrollera övriga noder.
-        if (maze[node.x][node.y] == " E") {
+        if (maze[node.x][node.y].equals(" E")) {
             path.add(node);
             return;
         }
@@ -82,19 +82,19 @@ public class MazeSolver {
         right = node.x + 1;
         up = node.y - 1;
         down = node.y + 1;
-        if (((maze[left][node.y] == "  " || (maze[left][node.y] == " E")))
+        if (((maze[left][node.y].equals("  ") || (maze[left][node.y].equals(" E"))))
                 && (left != node.prev.x)) {
             node.adj.add(new MazeNode(left, node.y, 1));
         }
-        if (((maze[right][node.y] == "  " || (maze[right][node.y] == " E")))
+        if (((maze[right][node.y].equals("  ")|| (maze[right][node.y].equals(" E"))))
                 && (right != node.prev.x)) {
             node.adj.add(new MazeNode(right, node.y, 1));
         }
-        if (((maze[node.x][up] == "  " || (maze[node.x][up] == " E")))
+        if (((maze[node.x][up].equals("  ")|| (maze[node.x][up].equals(" E"))))
                 && (up != node.prev.y)) {
             node.adj.add(new MazeNode(node.x, up, 1));
         }
-        if (((maze[node.x][down] == "  " || (maze[node.x][down] == " E")))
+        if (((maze[node.x][down].equals("  ")|| (maze[node.x][down].equals(" E"))))
                 && (down != node.prev.y)) {
             node.adj.add(new MazeNode(node.x, down, 1));
         }
@@ -107,10 +107,10 @@ public class MazeSolver {
     }
 
     private void printPath(String[][] maze, MazeNode node) {
-        if (maze[node.x][node.y] == " S") {
+        if (maze[node.x][node.y].equals(" S")) {
             return;
         } else {
-            if (!(maze[node.x][node.y] == " E")) {
+            if (!(maze[node.x][node.y].equals(" E"))) {
                 maze[node.x][node.y] = " *";
             }
             printPath(maze, node.prev);
@@ -123,7 +123,7 @@ public class MazeSolver {
 
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze.length; j++) {
-                System.out.print(maze[j][i]);
+                System.out.print(maze[i][j]);
             }
             System.out.println();
         }
