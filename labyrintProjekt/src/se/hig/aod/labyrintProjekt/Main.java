@@ -14,8 +14,8 @@ public class Main {
     	String labyrint ="Labyrint/testLabyrint";
     	//converter(labyrint);
         MazeSolver ms = new MazeSolver();
-        ms.solveMaze(converter(labyrint));
-        AldousBorderMazeGenerator am = new AldousBorderMazeGenerator(8);
+       // ms.solveMaze(converter(labyrint));
+        AldousBorderMazeGenerator am = new AldousBorderMazeGenerator(50);
         ms.solveMaze(am.getMaze());
         
     }
