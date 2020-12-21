@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        AldousBorderMazeGenerator am;
+        AbstractGenerator am;
         Scanner keyBoard = new Scanner(System.in);
         String fileName = null;
         if (args.length > 0) {
@@ -32,7 +32,7 @@ public class Main {
                     System.out.println("Choose size of labyrint");
                     size = keyBoard.nextInt();
                 }
-                am = new AldousBorderMazeGenerator(size);
+                am = new AldousBorderAlgorithm(size);
                 printToFile(am.getMaze(), fileName);
                 break;
             case "-r":
@@ -48,7 +48,7 @@ public class Main {
             keyBoard.close();
         } else {
             System.out.println("Choose size of labyrint:");
-            am = new AldousBorderMazeGenerator(keyBoard.nextInt());
+            am = new AldousBorderAlgorithm(keyBoard.nextInt());
             fileName = "MazeGenerated.txt";
             printToFile(am.getMaze(), fileName);
         }
