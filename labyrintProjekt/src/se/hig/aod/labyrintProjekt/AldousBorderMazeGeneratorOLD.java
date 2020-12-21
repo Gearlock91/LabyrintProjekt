@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class AldousBorderMazeGenerator {
+public class AldousBorderMazeGeneratorOLD {
 
     private List<Cell> unvisitedCells = new ArrayList<Cell>();
     private final String[] DIRECTION = {"NORTH", "SOUTH", "WEST", "EAST"};
@@ -28,7 +28,7 @@ public class AldousBorderMazeGenerator {
         }
     }
 
-    public AldousBorderMazeGenerator(int size) {
+    public AldousBorderMazeGeneratorOLD(int size) {
         if (size % 2 != 0) {
             // throw new IllegalArgument
             System.err.println("IllegalArgument!");
