@@ -46,7 +46,7 @@ public class AldousBorderMazeGenerator {
         createPerimeter();
         aldousBorderAlgorithm(maze);
     }
-    
+
     private void createBoard() {
         for (int i = 1; i < maze.length; i++) {
             for (int j = 1; j < maze.length; j++) {
@@ -90,8 +90,8 @@ public class AldousBorderMazeGenerator {
         current.format = " S";
 
         while (unvisitedCells.size() > 0) {
-            Random randomNeighbour = new Random();
-            int randomDirection = randomNeighbour.nextInt(4);
+            Random random = new Random();
+            int randomDirection = random.nextInt(4);
             Cell potentialWall;
             switch (DIRECTION[randomDirection]) {
             case "NORTH":
@@ -176,8 +176,6 @@ public class AldousBorderMazeGenerator {
         }
 
     }
-
-    
 
     public String[][] getMaze() {
         String[][] convertMaze = new String[width][height];
