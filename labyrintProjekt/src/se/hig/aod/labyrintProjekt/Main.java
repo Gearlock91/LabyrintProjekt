@@ -4,21 +4,42 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Main {
     
     public static void main(String[] args) {
-        
-    	String labyrint ="Labyrint/testLabyrint";
+    	AldousBorderMazeGenerator am = new AldousBorderMazeGenerator(50);
+    	String labyrint ="Labyrint/test.txt";
+    	 printToFile(am.getMaze());
     	//converter(labyrint);
         MazeSolver ms = new MazeSolver();
-       // ms.solveMaze(converter(labyrint));
-        AldousBorderMazeGenerator am = new AldousBorderMazeGenerator(50);
-
-        ms.solveMaze(am.getMaze());
+        ms.solveMaze(converter(labyrint));
         
+
+        //ms.solveMaze(am.getMaze());
+       
+        
+    }
+    private static void printToFile(String[][] maze) {
+    	try {
+    		PrintWriter labyWriter = new PrintWriter("Labyrint/test.txt");
+    		for(int i = 0; i < maze.length; i++) {
+    			for(int j = 0; j < maze.length; j++ ){
+    				labyWriter.print(maze[i][j]);
+    				
+    			}
+    			labyWriter.println();
+    		}
+    		labyWriter.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
     }
     private static String[][] converter(String labyrint){
     	String[][] maze;
@@ -47,7 +68,7 @@ public class Main {
 	
     	}
     	maze = new String[counter][counter];
-    	System.out.println("Maze size: " + counter*counter);
+    	
     	int i = 0;
     
 		while (i < maze.length) {
