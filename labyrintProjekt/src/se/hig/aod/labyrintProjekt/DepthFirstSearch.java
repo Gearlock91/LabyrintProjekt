@@ -15,8 +15,10 @@ public class DepthFirstSearch extends AbstractGenerator {
     void algorithm(Cell[][] maze) {
         Collections.shuffle(unvisitedCells);
         Cell current = unvisitedCells.get(0);
+        Cell randomEnd = unvisitedCells.get(1);
         depthAlgorithm(current);
         current.format = " S";
+        randomEnd.format = " E";
     }
 
     private void depthAlgorithm(Cell node) {
