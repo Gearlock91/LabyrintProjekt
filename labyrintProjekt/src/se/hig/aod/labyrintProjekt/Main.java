@@ -9,58 +9,88 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Main {
-
+    static Maze am;
+    static Maze df;
     public static void main(String[] args) {
-        AbstractGenerator am;
-        Scanner keyBoard = new Scanner(System.in);
+       
+        
+       
         String fileName = null;
-        if (args.length > 0) {
-            switch (args[0]) {
-            case "-w":
-                int size = 0;
-                if (args.length > 1) {
-                    fileName = args[1];
-                    if(args.length > 2) {
-                        size =  Integer.valueOf(args[2]);
-                    }else {
-                        System.out.println("Choose size of labyrint");
-                        size = keyBoard.nextInt();
-                    }
-                } else {
-                    System.out.println("Choose file name to write:");
-                    fileName = keyBoard.nextLine();
-                    System.out.println("Choose size of labyrint");
-                    size = keyBoard.nextInt();
-                }
-                am = new AldousBorderAlgorithm(size);
-                printToFile(am.getMaze(), fileName);
-                break;
-            case "-r":
-                if (args[1].length() > 0) {
-                    fileName = args[1];
-                } else {
-                    System.out.println("Choose file to read:");
-                    fileName = keyBoard.nextLine();
-                }
-
-                break;
-            }
-            keyBoard.close();
-        } else {
-            System.out.println("Choose size of labyrint:");
-            am = new AldousBorderAlgorithm(keyBoard.nextInt());
-            fileName = "MazeGenerated.txt";
-            printToFile(am.getMaze(), fileName);
+        
+        if(args.length <= 0) {
+            chooseMaze();
         }
+        
+        
+        
+//        if (args.length > 0) {
+//            switch (args[0]) {
+//            case "-w":
+//                int size = 0;
+//                if (args.length > 1) {
+//                    fileName = args[1];
+//                    if(args.length > 2) {
+//                        size =  Integer.valueOf(args[2]);
+//                    }else {
+//                        System.out.println("Choose size of labyrint");
+//                        size = keyBoard.nextInt();
+//                    }
+//                } else {
+//                    System.out.println("Choose file name to write:");
+//                    fileName = keyBoard.nextLine();
+//                    System.out.println("Choose size of labyrint");
+//                    size = keyBoard.nextInt();
+//                }
+//                am = new AldousBorderAlgorithm(size);
+//                printToFile(am.getMaze(), fileName);
+//                break;
+//            case "-r":
+//                if (args[1].length() > 0) {
+//                    fileName = args[1];
+//                } else {
+//                    System.out.println("Choose file to read:");
+//                    fileName = keyBoard.nextLine();
+//                }
+//
+//                break;
+//            }
+//            keyBoard.close();
+//        } else {
+//            System.out.println("Choose size of labyrint:");
+//            am = new AldousBorderAlgorithm(keyBoard.nextInt());
+//            fileName = "MazeGenerated.txt";
+//            printToFile(am.getMaze(), fileName);
+//        }
 
         // converter(labyrint);
-        MazeSolver ms = new MazeSolver();
+        Solver ms = new MazeSolver();
         ms.solveMaze(converter(fileName));
 
         // ms.solveMaze(am.getMaze());
 
     }
 
+    private static void chooseMaze() {
+        Scanner keyBoard = new Scanner(System.in);
+        System.out.println("Choose algorithm: ");
+        System.out.println("1. DepthFirst");
+        System.out.println("2. Aldous-Border");
+        int choice = keyBoard.nextInt();
+        System.out.println("Choose size of maze:");
+        int size  = keyBoard.nextInt();
+        System.out.println("Name your maze:");
+        String name = keyBoard.nextLine();
+        switch(choice) {
+        case 1:
+            df = new DepthFirstSearch(size);
+            printToFile(df.getMaze(), name);
+            break;
+        case 2:
+            am = new AldousBorderAlgorithm(size);
+            break;
+        }
+    }
+    
     private static void printToFile(String[][] maze, String name) {
         try {
 
