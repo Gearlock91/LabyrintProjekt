@@ -3,9 +3,6 @@ package se.hig.aod.labyrintProjekt;
 import java.util.Collections;
 import java.util.Random;
 
-import se.hig.aod.labyrintProjekt.AbstractGenerator.Cell;
-
-
 public class AldousBorderAlgorithm extends AbstractGenerator {
 
     public AldousBorderAlgorithm(int size) {
@@ -104,40 +101,6 @@ public class AldousBorderAlgorithm extends AbstractGenerator {
                 break;
             }
         }
-        
+
     }
-
-    @Override
-    String[][] getMaze() {
-        String[][] convertMaze = new String[width][height];
-
-        for (int i = 0; i < maze.length; i++) {
-            for (int j = 0; j < maze.length; j++) {
-                convertMaze[i][j] = maze[i][j].format;
-            }
-        }
-
-        return convertMaze;
-    }
-
-    @Override
-    void createBoard() {
-        for (int i = 1; i < maze.length; i++) {
-            for (int j = 1; j < maze.length; j++) {
-                int uneven = 0;
-
-                if (j % 2 != 0 && i % 2 != 0) {
-                    uneven = 1;
-                }
-
-                maze[i][j] = new Cell(i, j, uneven);
-
-                if (!(maze[i][j].visited)) {
-                    unvisitedCells.add(maze[i][j]);
-                }
-            }
-        }
-        
-    }
-
 }
