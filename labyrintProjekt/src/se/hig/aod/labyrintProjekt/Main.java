@@ -9,65 +9,20 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Main {
-	
+
     static Maze am;
     static Maze df;
-    
+
     public static void main(String[] args) {
-      
+
         String fileName = null;
-        
-        if(args.length <= 0) {
+
+        if (args.length <= 0) {
             fileName = chooseMaze();
         }
-        
+
         Solver ms = new MazeSolver();
         ms.solveMaze(converter(fileName));
-        
-        
-//        if (args.length > 0) {
-//            switch (args[0]) {
-//            case "-w":
-//                int size = 0;
-//                if (args.length > 1) {
-//                    fileName = args[1];
-//                    if(args.length > 2) {
-//                        size =  Integer.valueOf(args[2]);
-//                    }else {
-//                        System.out.println("Choose size of labyrint");
-//                        size = keyBoard.nextInt();
-//                    }
-//                } else {
-//                    System.out.println("Choose file name to write:");
-//                    fileName = keyBoard.nextLine();
-//                    System.out.println("Choose size of labyrint");
-//                    size = keyBoard.nextInt();
-//                }
-//                am = new AldousBorderAlgorithm(size);
-//                printToFile(am.getMaze(), fileName);
-//                break;
-//            case "-r":
-//                if (args[1].length() > 0) {
-//                    fileName = args[1];
-//                } else {
-//                    System.out.println("Choose file to read:");
-//                    fileName = keyBoard.nextLine();
-//                }
-//
-//                break;
-//            }
-//            keyBoard.close();
-//        } else {
-//            System.out.println("Choose size of labyrint:");
-//            am = new AldousBorderAlgorithm(keyBoard.nextInt());
-//            fileName = "MazeGenerated.txt";
-//            printToFile(am.getMaze(), fileName);
-//        }
-
-        // converter(labyrint);
-        
-
-        // ms.solveMaze(am.getMaze());
 
     }
 
@@ -78,24 +33,24 @@ public class Main {
         System.out.println("2. Aldous-Border");
         int choice = keyBoard.nextInt();
         System.out.println("Choose size of maze:");
-        int size  = keyBoard.nextInt();
+        int size = keyBoard.nextInt();
         System.out.println("Name your maze:");
-        String name = keyBoard.nextLine();
-        switch(choice) {
+        String name = keyBoard.next();
+        switch (choice) {
         case 1:
             df = new DepthFirstSearch(size);
             printToFile(df.getMaze(), name);
             break;
-            
+
         case 2:
             am = new AldousBorderAlgorithm(size);
             printToFile(am.getMaze(), name);
             break;
         }
         keyBoard.close();
-		return name;
+        return name;
     }
-    
+
     private static void printToFile(String[][] maze, String name) {
         try {
 
