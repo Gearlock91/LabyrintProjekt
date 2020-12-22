@@ -1,6 +1,8 @@
 package se.hig.aod.labyrintProjekt;
 
 import java.util.Collections;
+import java.util.Random;
+
 
 public class DepthFirstSearch extends AbstractGenerator {
 
@@ -13,47 +15,68 @@ public class DepthFirstSearch extends AbstractGenerator {
     void algorithm(Cell[][] maze) {
         Collections.shuffle(unvisitedCells);
         Cell current = unvisitedCells.get(0);
-        current.format = " S";
-        current.previous = current;
         depthAlgorithm(current);
+        current.format = " S";
     }
 
     private void depthAlgorithm(Cell node) {
         node.visited = true;
+        Random random = new Random();
         int left, right, up, down;
         left = node.x - 2;
         right = node.x + 2;
         up = node.y - 2;
         down = node.y + 2;
-        if ((left > 0) && !(maze[left][node.x].format == "  ")) {
-            node.adjecent.add(maze[left][node.y]);
-            maze[left][node.y].format = "  ";
-            maze[node.x - 1][node.y].format = "  ";
-        }
-        if ((right < width) && maze[right][node.x].visited == false
-                && right != node.previous.x) {
-            node.adjecent.add(maze[right][node.y]);
-            maze[right][node.y].format = "  ";
-            maze[node.x + 1][node.y].format = "  ";
-        }
-        if ((up > 0) && maze[node.x][up].visited == false && up != node.previous.y) {
-            node.adjecent.add(maze[node.x][up]);
-            maze[node.x][up].format = "  ";
-            maze[node.x][node.y - 1].format = "  ";
-           
-        }
-        if ((down < height) && maze[node.x][down].visited == false
-                && down != node.previous.y) {
-            node.adjecent.add(maze[node.x][down]);
-            maze[node.x][down].format = "  ";
-            maze[node.x][node.y + 1].format = "  ";
-        }
+        for (int i = 0; i < DIRECTIONS.length; i++) {
+            switch (DIRECTIONS[random.nextInt(4)]) {
+            case "NORTH":
+                if ((up > 0)) {
+                    Cell upwardsCell = maze[node.x][up];
+                    if (!(upwardsCell.format.equals("  "))) {
+                        upwardsCell.format = "  ";
+                        maze[node.x][node.y - 1].format = "  ";
+                        depthAlgorithm(upwardsCell);
+                    }
+                    // node.adjecent.add(maze[node.x][up]);
+                }
+                break;
+            case "SOUTH":
+                if ((down < height)) {
+                    Cell southCell = maze[node.x][down];
+                    if (!(southCell.format.equals("  "))) {
+                        southCell.format = "  ";
+                        maze[node.x][node.y + 1].format = "  ";
+                        depthAlgorithm(southCell);
+                    }
+                    // node.adjecent.add(maze[node.x][down]);
+                }
+                break;
+            case "WEST":
+                if ((left > 0)) {
+                    Cell westCell = maze[left][node.y];
+                    if (!(westCell.format.equals("  "))) {
+                        westCell.format = "  ";
+                        maze[node.x - 1][node.y].format = "  ";
+                        depthAlgorithm(westCell);
+                    }
+                    // node.adjecent.add(maze[left][node.y]);
+                }
+                break;
+            case "EAST":
 
-        for (Cell cell : node.adjecent) {
-            cell.previous = node;
-            depthAlgorithm(cell);
+                if ((right < width)) {
+                    Cell eastCell = maze[right][node.y];
+                    if (!(eastCell.format.equals("  "))) {
+                        eastCell.format = "  ";
+                        maze[node.x + 1][node.y].format = "  ";
+                        depthAlgorithm(eastCell);
+                    }
+                    // node.adjecent.add(maze[right][node.y]);
+                }
+                break;
+            }
         }
-  
+        
     }
 
 }
