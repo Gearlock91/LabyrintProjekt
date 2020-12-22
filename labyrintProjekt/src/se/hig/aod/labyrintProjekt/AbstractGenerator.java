@@ -1,19 +1,22 @@
 package se.hig.aod.labyrintProjekt;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import se.hig.aod.labyrintProjekt.AbstractGenerator.Cell;
 
 public abstract class AbstractGenerator {
-    
-    protected final String[] DIRECTIONS = {"NORTH", "SOUTH","WEST", "EAST"};
+
+    protected final String[] DIRECTIONS = {"NORTH", "SOUTH", "WEST", "EAST"};
     protected List<Cell> unvisitedCells = new ArrayList<Cell>();
     protected Cell[][] maze;
     protected int width;
     protected int height;
-    
-    
+
     protected class Cell {
+        protected List<Cell> adjecent;
+        protected Cell previous;
         protected boolean visited = true;
         protected String format = " X";
         protected int x;
@@ -24,30 +27,46 @@ public abstract class AbstractGenerator {
                 visited = false;
                 this.x = x;
                 this.y = y;
+                adjecent = new ArrayList<Cell>();
             }
         }
     }
-    
+
     public AbstractGenerator(int size) {
-        if(size % 2 != 0) {
-            //throw new IllegalArgument
+        if (size % 2 != 0) {
+            // throw new IllegalArgument
             System.err.println("IllegalArgument!");
-        }else {
+        } else {
             this.width = size - 1;
             this.height = size - 1;
-            createMaze(width,height);
+            createMaze(width, height);
         }
     }
-    
+
     private void createMaze(int width, int height) {
         maze = new Cell[width][height];
-
         createBoard();
         createPerimeter();
         algorithm(maze);
     }
-    
-    
+
+    private void createBoard() {
+        for (int i = 1; i < maze.length; i++) {
+            for (int j = 1; j < maze.length; j++) {
+                int uneven = 0;
+
+                if (j % 2 != 0 && i % 2 != 0) {
+                    uneven = 1;
+                }
+
+                maze[i][j] = new Cell(i, j, uneven);
+
+                if (!(maze[i][j].visited)) {
+                    unvisitedCells.add(maze[i][j]);
+                }
+            }
+        }
+    }
 
     private void createPerimeter() {
         for (int i = 0; i < maze.length; i++) {
@@ -65,8 +84,20 @@ public abstract class AbstractGenerator {
             maze[i][maze.length - 1] = new Cell(i, maze.length - 1, 0);
         }
     }
-    abstract void createBoard();
-    abstract String[][] getMaze();
+
+    protected String[][] getMaze() {
+        String[][] convertMaze = new String[width][height];
+
+        for (int i = 0; i < maze.length; i++) {
+            for (int j = 0; j < maze.length; j++) {
+                convertMaze[i][j] = maze[i][j].format;
+            }
+        }
+
+        return convertMaze;
+    }
+
+
     abstract void algorithm(Cell[][] maze);
 
 }
