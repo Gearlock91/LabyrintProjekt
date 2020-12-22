@@ -19,7 +19,7 @@ class DepthFirstSearchTest {
 
     @Test
     void test() {
-        generator = new DepthFirstSearch(20);
+        generator = new DepthFirstSearch(10000);
         String[][] maze = generator.getMaze();
         
         for(int i= 0; i < maze.length; i++) {
