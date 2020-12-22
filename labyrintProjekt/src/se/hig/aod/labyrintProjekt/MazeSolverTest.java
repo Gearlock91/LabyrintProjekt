@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 class MazeSolverTest {
     
-    MazeGenerator generator = new MazeGenerator();
     AldousBorderMazeGeneratorOLD aldousGenerator = new AldousBorderMazeGeneratorOLD(20);
 
     @BeforeEach

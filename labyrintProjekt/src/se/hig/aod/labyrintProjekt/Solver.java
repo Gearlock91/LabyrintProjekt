@@ -10,7 +10,7 @@ public interface Solver {
 	 * Löser labyrinten.
 	 * @param maze
 	 */
-	void solvMaze(String[][] maze);
+	void solveMaze(String[][] maze);
 	/**
 	 * Skriver ut labyrinten.
 	 * @param maze

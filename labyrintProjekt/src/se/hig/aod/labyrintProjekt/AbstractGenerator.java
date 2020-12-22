@@ -6,7 +6,7 @@ import java.util.List;
 
 import se.hig.aod.labyrintProjekt.AbstractGenerator.Cell;
 
-public abstract class AbstractGenerator {
+public abstract class AbstractGenerator implements Maze {
 
     protected final String[] DIRECTIONS = {"NORTH", "SOUTH", "WEST", "EAST"};
     protected List<Cell> unvisitedCells = new ArrayList<Cell>();
@@ -43,7 +43,7 @@ public abstract class AbstractGenerator {
         }
     }
 
-    private void createMaze(int width, int height) {
+    public void createMaze(int width, int height) {
         maze = new Cell[width][height];
         createBoard();
         createPerimeter();
@@ -85,7 +85,7 @@ public abstract class AbstractGenerator {
         }
     }
 
-    protected String[][] getMaze() {
+    public String[][] getMaze() {
         String[][] convertMaze = new String[width][height];
 
         for (int i = 0; i < maze.length; i++) {

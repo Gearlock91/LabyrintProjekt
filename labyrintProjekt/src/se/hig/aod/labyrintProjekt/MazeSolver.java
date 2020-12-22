@@ -3,7 +3,7 @@ package se.hig.aod.labyrintProjekt;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MazeSolver {
+public class MazeSolver implements Solver {
 
     private List<MazeNode> path = new ArrayList<MazeNode>();
     private final int INFINITY = Integer.MAX_VALUE;
