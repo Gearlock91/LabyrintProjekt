@@ -9,18 +9,20 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Main {
+	
     static Maze am;
     static Maze df;
+    
     public static void main(String[] args) {
-       
-        
-       
+      
         String fileName = null;
         
         if(args.length <= 0) {
-            chooseMaze();
+            fileName = chooseMaze();
         }
         
+        Solver ms = new MazeSolver();
+        ms.solveMaze(converter(fileName));
         
         
 //        if (args.length > 0) {
@@ -63,14 +65,13 @@ public class Main {
 //        }
 
         // converter(labyrint);
-        Solver ms = new MazeSolver();
-        ms.solveMaze(converter(fileName));
+        
 
         // ms.solveMaze(am.getMaze());
 
     }
 
-    private static void chooseMaze() {
+    private static String chooseMaze() {
         Scanner keyBoard = new Scanner(System.in);
         System.out.println("Choose algorithm: ");
         System.out.println("1. DepthFirst");
@@ -85,10 +86,14 @@ public class Main {
             df = new DepthFirstSearch(size);
             printToFile(df.getMaze(), name);
             break;
+            
         case 2:
             am = new AldousBorderAlgorithm(size);
+            printToFile(am.getMaze(), name);
             break;
         }
+        keyBoard.close();
+		return name;
     }
     
     private static void printToFile(String[][] maze, String name) {
