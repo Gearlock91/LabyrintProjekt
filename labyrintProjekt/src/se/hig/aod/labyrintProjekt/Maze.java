@@ -1,6 +1,6 @@
 package se.hig.aod.labyrintProjekt;
 
-public interface AldusMazeInterface {
+public interface Maze {
 
 	void createPerimeter();
 	void createBoard();
