@@ -21,8 +21,10 @@ public class Main {
             fileName = chooseMaze();
         }
 
-        Solver ms = new MazeSolver();
-        ms.solveMaze(converter(fileName));
+//        Solver ms = new MazeSolver();
+//        ms.solveMaze(converter(fileName));
+          Solver mouse = new MouseAlgorithm();
+          mouse.solveMaze(converter(fileName));
 
     }
 
