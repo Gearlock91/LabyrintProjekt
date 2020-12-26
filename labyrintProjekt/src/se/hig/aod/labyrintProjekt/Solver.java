@@ -15,7 +15,7 @@ public interface Solver {
 	 * Skriver ut labyrinten.
 	 * @param maze
 	 */
-	void printMaze(String[][] maze);
+	
 	
 	
 

@@ -117,7 +117,7 @@ public class MazeSolver implements Solver {
         }
     }
 
-    public void printMaze(String[][] maze) {
+    private void printMaze(String[][] maze) {
 
         printPath(maze, endNode);
 
