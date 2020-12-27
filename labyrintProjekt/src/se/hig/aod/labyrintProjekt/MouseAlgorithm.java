@@ -1,6 +1,7 @@
 package se.hig.aod.labyrintProjekt;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -15,13 +16,14 @@ public class MouseAlgorithm implements Solver {
 
         private int x;
         private int y;
-
+        private List<String> adj;
         private String format;
 
         public MazeNode(int x, int y, String format) {
             this.x = x;
             this.y = y;
             this.format = format;
+            adj = new ArrayList<String>();
         }
 
     }
@@ -56,10 +58,10 @@ public class MouseAlgorithm implements Solver {
     private void randomMouze(String[][] maze) {
         boolean cheezeFound = false;
         int left, right, down, up;
+       
 
         String direction = randomDirection();
         while (!cheezeFound) {
-
             left = x - 1;
             right = x + 1;
             up = y - 1;
@@ -67,70 +69,119 @@ public class MouseAlgorithm implements Solver {
 
             switch (direction) {
             case "NORTH":
-                MazeNode nextPos = new MazeNode(x, up, maze[x][up]);
-                if (nextPos.format.equals(" X")) {
-                    String[] directions = {"SOUTH","WEST","EAST"};
-                    Random newDirection = new Random();
-                    direction = directions[newDirection.nextInt(3)];
+                if(maze[x][up].equals(" X")) {
+                    direction = randomDirection();
                     break;
                 }
-                path.add(nextPos);
-                if (nextPos.format.equals(" E")) {
+                y--;
+                MazeNode currentPos = new MazeNode(x, y, maze[x][y]);
+                path.add(currentPos);
+                if (currentPos.format.equals(" E")) {
                     cheezeFound = true;
                     break;
-                } else {
-                    y = up;
+                } 
+                if (maze[x][currentPos.y - 1].equals("  ") || maze[x][currentPos.y - 1].equals(" E") || maze[x][currentPos.y - 1].equals(" S") ) {
+                    currentPos.adj.add("NORTH");
                 }
+                if (maze[currentPos.x + 1][currentPos.y].equals("  ") || maze[currentPos.x + 1][currentPos.y].equals(" E") || maze[currentPos.x + 1][currentPos.y].equals(" S")) {
+                    currentPos.adj.add("EAST");
+                }
+                if (maze[currentPos.x - 1][currentPos.y].equals("  ") || maze[currentPos.x - 1][currentPos.y].equals(" E") || maze[currentPos.x - 1][currentPos.y].equals(" S")) {
+                    currentPos.adj.add("WEST");
+                }
+                if(currentPos.adj.isEmpty()) {
+                    currentPos.adj.add("SOUTH");
+                }
+                Collections.shuffle(currentPos.adj);
+                direction = currentPos.adj.get(0);
+                currentPos.adj.clear();
                 break;
             case "SOUTH":
-                nextPos = new MazeNode(x, down, maze[x][down]);
-                if (nextPos.format.equals(" X")) {
-                    String[] directions = {"NORTH","WEST","EAST"};
-                    Random newDirection = new Random();
-                    direction = directions[newDirection.nextInt(3)];
+                if(maze[x][down].equals(" X")) {
+                    direction = randomDirection();
                     break;
                 }
-                path.add(nextPos);
-                if (nextPos.format.equals(" E")) {
+                y++;
+                currentPos = new MazeNode(x, y, maze[x][y]);
+                path.add(currentPos);
+                if (currentPos.format.equals(" E")) {
                     cheezeFound = true;
                     break;
-                } else {
-                    y = down;
+                } 
+                if (maze[x][currentPos.y + 1].equals("  ") ||  maze[x][currentPos.y + 1].equals(" E") || maze[x][currentPos.y + 1].equals(" S")) {
+                    currentPos.adj.add("SOUTH");
                 }
+                if (maze[currentPos.x - 1][currentPos.y].equals("  ") ||  maze[currentPos.x - 1][currentPos.y].equals(" E") || maze[currentPos.x - 1][currentPos.y].equals(" S")) {
+                    currentPos.adj.add("WEST");
+                }
+                if (maze[currentPos.x + 1][currentPos.y].equals("  ") ||  maze[currentPos.x + 1][currentPos.y].equals(" E") || maze[currentPos.x + 1][currentPos.y].equals(" S")) {
+                    currentPos.adj.add("EAST");
+                }
+                if(currentPos.adj.isEmpty()) {
+                    currentPos.adj.add("NORTH");
+                }
+                Collections.shuffle(currentPos.adj);
+                direction = currentPos.adj.get(0);
+                currentPos.adj.clear();
                 break;
             case "EAST":
-                nextPos = new MazeNode(right, y, maze[right][y]);
-                if (nextPos.format.equals(" X")) {
-                    String[] directions = {"SOUTH","WEST","NORTH"};
-                    Random newDirection = new Random();
-                    direction = directions[newDirection.nextInt(3)];
+                if(maze[right][y].equals(" X")) {
+                    direction = randomDirection();
                     break;
                 }
-                path.add(nextPos);
-                if (nextPos.format.equals(" E")) {
+                x++;
+                currentPos = new MazeNode(x, y, maze[x][y]);
+                path.add(currentPos);
+                if (currentPos.format.equals(" E")) {
                     cheezeFound = true;
                     break;
-                } else {
-                    x = right;
+                } 
+                if (maze[currentPos.x + 1][y].equals("  ") || maze[currentPos.x + 1][y].equals(" E") || maze[currentPos.x + 1][y].equals(" S")) {
+                    currentPos.adj.add("EAST");
                 }
+                if (maze[x][currentPos.y - 1].equals("  ") || maze[x][currentPos.y - 1].equals(" E") || maze[x][currentPos.y - 1].equals(" S")) {
+                    currentPos.adj.add("NORTH");
+                }
+                if (maze[x][currentPos.y + 1].equals("  ") || maze[x][currentPos.y + 1].equals(" E") ||  maze[x][currentPos.y + 1].equals(" S")) {
+                    currentPos.adj.add("SOUTH");
+                }
+                if(currentPos.adj.isEmpty()) {
+                    currentPos.adj.add("WEST");
+                }
+                Collections.shuffle(currentPos.adj);
+                direction = currentPos.adj.get(0);
+                currentPos.adj.clear();
                 break;
             case "WEST":
-                nextPos = new MazeNode(left, y, maze[left][y]);
-                if (nextPos.format.equals(" X")) {
-                    String[] directions = {"SOUTH","NORTH","EAST"};
-                    Random newDirection = new Random();
-                    direction = directions[newDirection.nextInt(3)];
+                if(maze[left][y].equals(" X")) {
+                    direction = randomDirection();
                     break;
                 }
-                path.add(nextPos);
-                if (nextPos.format.equals(" E")) {
+                x--;
+                currentPos = new MazeNode(x, y, maze[x][y]);
+                path.add(currentPos);
+                if (currentPos.format.equals(" E")) {
                     cheezeFound = true;
                     break;
-                } else {
-                    x = left;
+                } 
+                if (maze[currentPos.x - 1][y].equals("  ") || maze[currentPos.x - 1][y].equals(" E") || maze[currentPos.x - 1][y].equals(" S")) {
+                    currentPos.adj.add("WEST");
                 }
+                if (maze[x][currentPos.y - 1].equals("  ") || maze[x][currentPos.y - 1].equals(" E") || maze[x][currentPos.y - 1].equals(" S")) {
+                    currentPos.adj.add("NORTH");
+                }
+                if (maze[x][currentPos.y + 1].equals("  ") || maze[x][currentPos.y + 1].equals(" E") || maze[x][currentPos.y + 1].equals(" S")) {
+                    currentPos.adj.add("SOUTH");
+                }
+                if(currentPos.adj.isEmpty()) {
+                    currentPos.adj.add("EAST");
+                }
+                Collections.shuffle(currentPos.adj);
+                direction = currentPos.adj.get(0);
+                currentPos.adj.clear();
                 break;
             }
+            
         }
 
     }
