@@ -14,7 +14,7 @@ class MouseAlgorithmTest {
     @BeforeEach
     void setUp() throws Exception {
         wf = new MouseAlgorithm();
-        ab = new AldousBorderAlgorithm(500);
+        ab = new AldousBorderAlgorithm(20);
     }
 
     @AfterEach
