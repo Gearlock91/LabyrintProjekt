@@ -80,13 +80,13 @@ public class MouseAlgorithm implements Solver {
                     cheezeFound = true;
                     break;
                 } 
-                if (maze[x][currentPos.y - 1].equals("  ") || maze[x][currentPos.y - 1].equals(" E") || maze[x][currentPos.y - 1].equals(" S") ) {
+                if (!(maze[x][currentPos.y - 1].equals("  X"))) {
                     currentPos.adj.add("NORTH");
                 }
-                if (maze[currentPos.x + 1][currentPos.y].equals("  ") || maze[currentPos.x + 1][currentPos.y].equals(" E") || maze[currentPos.x + 1][currentPos.y].equals(" S")) {
+                if (!(maze[currentPos.x + 1][currentPos.y].equals(" X"))) {
                     currentPos.adj.add("EAST");
                 }
-                if (maze[currentPos.x - 1][currentPos.y].equals("  ") || maze[currentPos.x - 1][currentPos.y].equals(" E") || maze[currentPos.x - 1][currentPos.y].equals(" S")) {
+                if (!(maze[currentPos.x - 1][currentPos.y].equals(" X"))) {
                     currentPos.adj.add("WEST");
                 }
                 if(currentPos.adj.isEmpty()) {
@@ -108,13 +108,13 @@ public class MouseAlgorithm implements Solver {
                     cheezeFound = true;
                     break;
                 } 
-                if (maze[x][currentPos.y + 1].equals("  ") ||  maze[x][currentPos.y + 1].equals(" E") || maze[x][currentPos.y + 1].equals(" S")) {
+                if (!(maze[x][currentPos.y + 1].equals(" X"))) {
                     currentPos.adj.add("SOUTH");
                 }
-                if (maze[currentPos.x - 1][currentPos.y].equals("  ") ||  maze[currentPos.x - 1][currentPos.y].equals(" E") || maze[currentPos.x - 1][currentPos.y].equals(" S")) {
+                if (!(maze[currentPos.x - 1][currentPos.y].equals(" X"))) {
                     currentPos.adj.add("WEST");
                 }
-                if (maze[currentPos.x + 1][currentPos.y].equals("  ") ||  maze[currentPos.x + 1][currentPos.y].equals(" E") || maze[currentPos.x + 1][currentPos.y].equals(" S")) {
+                if (!(maze[currentPos.x + 1][currentPos.y].equals(" X"))) {
                     currentPos.adj.add("EAST");
                 }
                 if(currentPos.adj.isEmpty()) {
@@ -136,13 +136,13 @@ public class MouseAlgorithm implements Solver {
                     cheezeFound = true;
                     break;
                 } 
-                if (maze[currentPos.x + 1][y].equals("  ") || maze[currentPos.x + 1][y].equals(" E") || maze[currentPos.x + 1][y].equals(" S")) {
+                if (!(maze[currentPos.x + 1][y].equals(" X"))) {
                     currentPos.adj.add("EAST");
                 }
-                if (maze[x][currentPos.y - 1].equals("  ") || maze[x][currentPos.y - 1].equals(" E") || maze[x][currentPos.y - 1].equals(" S")) {
+                if (!(maze[x][currentPos.y - 1].equals(" X"))) {
                     currentPos.adj.add("NORTH");
                 }
-                if (maze[x][currentPos.y + 1].equals("  ") || maze[x][currentPos.y + 1].equals(" E") ||  maze[x][currentPos.y + 1].equals(" S")) {
+                if (!(maze[x][currentPos.y + 1].equals(" X"))) {
                     currentPos.adj.add("SOUTH");
                 }
                 if(currentPos.adj.isEmpty()) {
@@ -164,13 +164,13 @@ public class MouseAlgorithm implements Solver {
                     cheezeFound = true;
                     break;
                 } 
-                if (maze[currentPos.x - 1][y].equals("  ") || maze[currentPos.x - 1][y].equals(" E") || maze[currentPos.x - 1][y].equals(" S")) {
+                if (!(maze[currentPos.x - 1][y].equals(" X"))) {
                     currentPos.adj.add("WEST");
                 }
-                if (maze[x][currentPos.y - 1].equals("  ") || maze[x][currentPos.y - 1].equals(" E") || maze[x][currentPos.y - 1].equals(" S")) {
+                if (!(maze[x][currentPos.y - 1].equals(" X"))) {
                     currentPos.adj.add("NORTH");
                 }
-                if (maze[x][currentPos.y + 1].equals("  ") || maze[x][currentPos.y + 1].equals(" E") || maze[x][currentPos.y + 1].equals(" S")) {
+                if (!(maze[x][currentPos.y + 1].equals(" X"))) {
                     currentPos.adj.add("SOUTH");
                 }
                 if(currentPos.adj.isEmpty()) {
