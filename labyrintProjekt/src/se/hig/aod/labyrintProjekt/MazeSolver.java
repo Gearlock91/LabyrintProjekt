@@ -68,7 +68,9 @@ public class MazeSolver implements Solver {
      */
     public void solveMaze(final String[][] maze) {
         MazeNode startNode = readMaze(maze);
+        long start = System.currentTimeMillis();
         bruteForce(maze, startNode);
+        System.out.printf("Time to solve maze: %dms\n",System.currentTimeMillis() - start);
         printMaze(maze);
     }
 

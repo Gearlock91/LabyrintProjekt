@@ -66,8 +66,10 @@ public class MouseAlgorithm implements Solver {
     @Override
     public void solveMaze(final String[][] maze) {
         path = new ArrayList<MazeNode>();
+        long start = System.currentTimeMillis();
         getStart(maze);
         randomMouze(maze);
+        System.out.printf("Time to solve maze: %dms\n",System.currentTimeMillis() - start);
         printMaze(maze);
     }
 

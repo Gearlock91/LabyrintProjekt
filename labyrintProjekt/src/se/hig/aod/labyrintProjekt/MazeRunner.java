@@ -80,12 +80,16 @@ public final class MazeRunner {
 
         switch (choice) {
         case 1:
+            long start = System.currentTimeMillis();
             df = new DepthFirstSearch(size);
+            System.out.printf("Time to create maze: %dms\n",System.currentTimeMillis() - start);
             printToFile(df.getMaze(), name);
             break;
 
         case 2:
+            start = System.currentTimeMillis();
             aldousBorder = new AldousBorderAlgorithm(size);
+            System.out.printf("Time to create maze: %dms\n",System.currentTimeMillis() - start);
             printToFile(aldousBorder.getMaze(), name);
             break;
         default:
