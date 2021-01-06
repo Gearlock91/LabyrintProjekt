@@ -5,7 +5,10 @@ import java.util.Random;
 
 /**
  * Implementationen utav DepthFirstSearch algoritmen mha vår abstrakta generator
- * av labyrinter.
+ * av labyrinter. Denna implementation inspererades utav Miguel Kano's genomgång
+ * av DepthFirst-search.
+ * {@see <a href="http://www.migapro.com/depth-first-search/">Miguel Kano's
+ * DepthFirst-Search</a> }
  * @author Andreas Roghe
  * @author Sofia Ågren
  * @version 2021-01-06
