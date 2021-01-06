@@ -14,8 +14,9 @@ import java.util.Scanner;
  * får användaren välja vilken taktik hen vill lösa labyrinten med. De lösnings
  * algoritmer som är implementerade är en så kallad Mouse Algorithm samt en ren
  * BruteForce algoritm som tittar efter den kortaste vägen.
- * @author Andreas Roghe, Sofia Ågren
- * @version 2020-01-06
+ * @author Andreas Roghe
+ * @author Sofia Ågren
+ * @version 2021-01-06
  */
 
 public final class MazeRunner {

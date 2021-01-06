@@ -6,8 +6,9 @@ import java.util.Random;
 /**
  * Implementationen utav DepthFirstSearch algoritmen mha vår abstrakta generator
  * av labyrinter.
- * @author Andreas Roghe, Sofia Ågren
- * @version 2020-01-06
+ * @author Andreas Roghe
+ * @author Sofia Ågren
+ * @version 2021-01-06
  */
 
 public class DepthFirstSearch extends AbstractGenerator {

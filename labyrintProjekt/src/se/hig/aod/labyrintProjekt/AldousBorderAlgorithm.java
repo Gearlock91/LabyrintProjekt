@@ -7,7 +7,7 @@ import java.util.Random;
  * Implementationen utav AldousBorder algoritmen.
  * @author Andreas Roghe
  * @author Sofia Ågren
- * @version 2020-01-06
+ * @version 2021-01-06
  */
 
 public class AldousBorderAlgorithm extends AbstractGenerator {

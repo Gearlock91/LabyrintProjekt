@@ -5,21 +5,56 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class MouseAlgorithm implements Solver {
+/**
+ * Vår implementation utav en enkel Mouse-algoritm där vi helt random bestämmer
+ * vägval när vi kommer fram till en korsning.
+ * @author Andreas Roghe
+ * @author Sofia Ågren
+ * @version 2021-01-06
+ */
 
-    private final String[] DIRECTIONS = {"NORTH", "SOUTH", "EAST", "WEST"};
+public class MouseAlgorithm implements Solver {
+    /**
+     * Antalet vägar vi ska kolla om vi kan gå.
+     */
+    private static final int POSSIBLE_ROAD = 4;
+    /**
+     * Riktningarna vi kan gå i form utav väderstreck.
+     */
+    private static final String[] DIRECTIONS = {"NORTH", "SOUTH", "EAST", "WEST"};
+    /**
+     * Vägen vi har gått.
+     */
     private List<MazeNode> path;
+    /**
+     * Koordinaten x för startpunkten.
+     */
     private int x;
+    /**
+     * Koordinaten y för startpunkten.
+     */
     private int y;
 
     private class MazeNode {
 
+        /**
+         * Koordinaten x för cellen.
+         */
         private int x;
+        /**
+         * Koordinaten y för cellen.
+         */
         private int y;
+        /**
+         * Närliggande celler från den vi står i.
+         */
         private List<String> adj;
+        /**
+         * Formatet på cellen, om de är en vägg eller väg.
+         */
         private String format;
 
-        public MazeNode(int x, int y, String format) {
+        public MazeNode(final int x, final int y, final String format) {
             this.x = x;
             this.y = y;
             this.format = format;
@@ -29,19 +64,17 @@ public class MouseAlgorithm implements Solver {
     }
 
     @Override
-    public void solveMaze(String[][] maze) {
+    public void solveMaze(final String[][] maze) {
         path = new ArrayList<MazeNode>();
         getStart(maze);
         randomMouze(maze);
         printMaze(maze);
     }
 
-    private void printMaze(String[][] maze) {
+    private void printMaze(final String[][] maze) {
 
         for (MazeNode node : path) {
-            if (node.format.equals(" S") || node.format.equals(" E")) {
-
-            } else {
+            if (!(node.format.equals(" S") || node.format.equals(" E"))) {
                 maze[node.x][node.y] = " *";
             }
 
@@ -55,10 +88,12 @@ public class MouseAlgorithm implements Solver {
         }
     }
 
-    private void randomMouze(String[][] maze) {
+    private void randomMouze(final String[][] maze) {
         boolean cheezeFound = false;
-        int left, right, down, up;
-       
+        int left;
+        int right;
+        int up;
+        int down;
 
         String direction = randomDirection();
         while (!cheezeFound) {
@@ -69,7 +104,7 @@ public class MouseAlgorithm implements Solver {
 
             switch (direction) {
             case "NORTH":
-                if(maze[x][up].equals(" X")) {
+                if (maze[x][up].equals(" X")) {
                     direction = randomDirection();
                     break;
                 }
@@ -79,7 +114,7 @@ public class MouseAlgorithm implements Solver {
                 if (currentPos.format.equals(" E")) {
                     cheezeFound = true;
                     break;
-                } 
+                }
                 if (!(maze[x][currentPos.y - 1].equals("  X"))) {
                     currentPos.adj.add("NORTH");
                 }
@@ -89,7 +124,7 @@ public class MouseAlgorithm implements Solver {
                 if (!(maze[currentPos.x - 1][currentPos.y].equals(" X"))) {
                     currentPos.adj.add("WEST");
                 }
-                if(currentPos.adj.isEmpty()) {
+                if (currentPos.adj.isEmpty()) {
                     currentPos.adj.add("SOUTH");
                 }
                 Collections.shuffle(currentPos.adj);
@@ -97,7 +132,7 @@ public class MouseAlgorithm implements Solver {
                 currentPos.adj.clear();
                 break;
             case "SOUTH":
-                if(maze[x][down].equals(" X")) {
+                if (maze[x][down].equals(" X")) {
                     direction = randomDirection();
                     break;
                 }
@@ -107,7 +142,7 @@ public class MouseAlgorithm implements Solver {
                 if (currentPos.format.equals(" E")) {
                     cheezeFound = true;
                     break;
-                } 
+                }
                 if (!(maze[x][currentPos.y + 1].equals(" X"))) {
                     currentPos.adj.add("SOUTH");
                 }
@@ -117,7 +152,7 @@ public class MouseAlgorithm implements Solver {
                 if (!(maze[currentPos.x + 1][currentPos.y].equals(" X"))) {
                     currentPos.adj.add("EAST");
                 }
-                if(currentPos.adj.isEmpty()) {
+                if (currentPos.adj.isEmpty()) {
                     currentPos.adj.add("NORTH");
                 }
                 Collections.shuffle(currentPos.adj);
@@ -125,7 +160,7 @@ public class MouseAlgorithm implements Solver {
                 currentPos.adj.clear();
                 break;
             case "EAST":
-                if(maze[right][y].equals(" X")) {
+                if (maze[right][y].equals(" X")) {
                     direction = randomDirection();
                     break;
                 }
@@ -135,7 +170,7 @@ public class MouseAlgorithm implements Solver {
                 if (currentPos.format.equals(" E")) {
                     cheezeFound = true;
                     break;
-                } 
+                }
                 if (!(maze[currentPos.x + 1][y].equals(" X"))) {
                     currentPos.adj.add("EAST");
                 }
@@ -145,7 +180,7 @@ public class MouseAlgorithm implements Solver {
                 if (!(maze[x][currentPos.y + 1].equals(" X"))) {
                     currentPos.adj.add("SOUTH");
                 }
-                if(currentPos.adj.isEmpty()) {
+                if (currentPos.adj.isEmpty()) {
                     currentPos.adj.add("WEST");
                 }
                 Collections.shuffle(currentPos.adj);
@@ -153,7 +188,7 @@ public class MouseAlgorithm implements Solver {
                 currentPos.adj.clear();
                 break;
             case "WEST":
-                if(maze[left][y].equals(" X")) {
+                if (maze[left][y].equals(" X")) {
                     direction = randomDirection();
                     break;
                 }
@@ -163,7 +198,7 @@ public class MouseAlgorithm implements Solver {
                 if (currentPos.format.equals(" E")) {
                     cheezeFound = true;
                     break;
-                } 
+                }
                 if (!(maze[currentPos.x - 1][y].equals(" X"))) {
                     currentPos.adj.add("WEST");
                 }
@@ -173,25 +208,27 @@ public class MouseAlgorithm implements Solver {
                 if (!(maze[x][currentPos.y + 1].equals(" X"))) {
                     currentPos.adj.add("SOUTH");
                 }
-                if(currentPos.adj.isEmpty()) {
+                if (currentPos.adj.isEmpty()) {
                     currentPos.adj.add("EAST");
                 }
                 Collections.shuffle(currentPos.adj);
                 direction = currentPos.adj.get(0);
                 currentPos.adj.clear();
                 break;
+            default:
+                break;
             }
-            
+
         }
 
     }
 
     private String randomDirection() {
         Random random = new Random();
-        return DIRECTIONS[random.nextInt(4)];
+        return DIRECTIONS[random.nextInt(POSSIBLE_ROAD)];
     }
 
-    private void getStart(String[][] maze) {
+    private void getStart(final String[][] maze) {
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze.length; j++) {
                 if (maze[i][j].equals(" S")) {

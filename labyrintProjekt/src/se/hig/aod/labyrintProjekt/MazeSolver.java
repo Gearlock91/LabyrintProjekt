@@ -3,28 +3,59 @@ package se.hig.aod.labyrintProjekt;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MazeSolver implements Solver {
+/**
+ * Implementation utav en BruteForce algoritm som tittar efter den kortaste
+ * vägen från start till slutpunkten utav alla möjliga vägar.
+ * @author Andreas Roghe
+ * @author Sofia Ågren
+ * @version 2021-01-06
+ */
 
+public class MazeSolver implements Solver {
+    /**
+     * Denna lista håller reda på den möjliga vägen fram till slutnoden E.
+     */
     private List<MazeNode> path = new ArrayList<MazeNode>();
-    private final int INFINITY = Integer.MAX_VALUE;
+    /**
+     * Antalet steg fram till slutnoden sätts till oändlighet inledningsvis.
+     */
+    private static final int INFINITY = Integer.MAX_VALUE;
+    /**
+     * Hållare för slutnoden.
+     */
     private MazeNode endNode;
 
     /**
-     * Klassen som håller reda på den aktuella informationen om
-     * en specifik väg som är en väg i labyrinten.
-     * @author Andreas Roghe, Sofia Ågren
-     * @version 2020-12-19
-     *
+     * Klassen som håller reda på den aktuella informationen om en specifik väg som
+     * är en väg i labyrinten.
+     * @author Andreas Roghe
+     * @author Sofia Ågren
+     * @version 2021-12-19
      */
     private class MazeNode {
-
+        /**
+         * En lista för att hålla reda på närliggande celler till den aktuella cellen vi
+         * står i.
+         */
         private List<MazeNode> adj;
+        /**
+         * En pekare till föregående nod vi stod i.
+         */
         private MazeNode prev;
+        /**
+         * Koordinaten x i matrisen för cellen.
+         */
         private int x;
+        /**
+         * Koordinaten y i matrisen för cellen.
+         */
         private int y;
+        /**
+         * Avståndet från start till den cell vi står i.
+         */
         private int distance = 0;
 
-        public MazeNode(int x, int y, int distance) {
+        public MazeNode(final int x, final int y, final int distance) {
             this.x = x;
             this.y = y;
             this.distance = distance;
@@ -32,13 +63,16 @@ public class MazeSolver implements Solver {
         }
     }
 
-    public void solveMaze(String[][] maze) {
+    /**
+     * Den publika metoden för att hämta in en labyrint att lösa med algoritmen.
+     */
+    public void solveMaze(final String[][] maze) {
         MazeNode startNode = readMaze(maze);
         bruteForce(maze, startNode);
         printMaze(maze);
     }
 
-    private MazeNode readMaze(String[][] maze) {
+    private MazeNode readMaze(final String[][] maze) {
         // find Start
 
         MazeNode start = null;
@@ -53,7 +87,7 @@ public class MazeSolver implements Solver {
         return start;
     }
 
-    private void bruteForce(String[][] maze, MazeNode start) {
+    private void bruteForce(final String[][] maze, final MazeNode start) {
         start.distance = 0;
         checkAdj(maze, start);
 
@@ -67,7 +101,7 @@ public class MazeSolver implements Solver {
         System.out.println("Steps from start to endpoint: " + min);
     }
 
-    private void checkAdj(String[][] maze, MazeNode node) {
+    private void checkAdj(final String[][] maze, final MazeNode node) {
         // Avståndet från startpunkten till den aktuella noden.
         node.distance += node.prev.distance;
         // Om vi hittar slutpunkten lägg till den i path och fortsätt
@@ -77,7 +111,10 @@ public class MazeSolver implements Solver {
             return;
         }
         // Vi tittar om det finns en väg åt vänster,höger,uppåt samt nedåt.
-        int left, right, up, down;
+        int left;
+        int right;
+        int up;
+        int down;
         left = node.x - 1;
         right = node.x + 1;
         up = node.y - 1;
@@ -86,15 +123,15 @@ public class MazeSolver implements Solver {
                 && (left != node.prev.x)) {
             node.adj.add(new MazeNode(left, node.y, 1));
         }
-        if (((maze[right][node.y].equals("  ")|| (maze[right][node.y].equals(" E"))))
+        if (((maze[right][node.y].equals("  ") || (maze[right][node.y].equals(" E"))))
                 && (right != node.prev.x)) {
             node.adj.add(new MazeNode(right, node.y, 1));
         }
-        if (((maze[node.x][up].equals("  ")|| (maze[node.x][up].equals(" E"))))
+        if (((maze[node.x][up].equals("  ") || (maze[node.x][up].equals(" E"))))
                 && (up != node.prev.y)) {
             node.adj.add(new MazeNode(node.x, up, 1));
         }
-        if (((maze[node.x][down].equals("  ")|| (maze[node.x][down].equals(" E"))))
+        if (((maze[node.x][down].equals("  ") || (maze[node.x][down].equals(" E"))))
                 && (down != node.prev.y)) {
             node.adj.add(new MazeNode(node.x, down, 1));
         }
@@ -106,7 +143,7 @@ public class MazeSolver implements Solver {
 
     }
 
-    private void printPath(String[][] maze, MazeNode node) {
+    private void printPath(final String[][] maze, final MazeNode node) {
         if (maze[node.x][node.y].equals(" S")) {
             return;
         } else {
@@ -117,7 +154,7 @@ public class MazeSolver implements Solver {
         }
     }
 
-    private void printMaze(String[][] maze) {
+    private void printMaze(final String[][] maze) {
 
         printPath(maze, endNode);
 

@@ -7,7 +7,7 @@ import java.util.List;
  * Den abstrakta implementationen utav hur en generator för en Maze skall se ut.
  * @author Andreas Roghe
  * @author Sofia Ågren
- * @version 2020-01-06
+ * @version 2021-01-06
  */
 
 public abstract class AbstractGenerator implements Maze {
