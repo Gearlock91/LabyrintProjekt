@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 class MazeSolverTest {
     
-    AldousBorderMazeGeneratorOLD aldousGenerator = new AldousBorderMazeGeneratorOLD(20);
+    //AldousBorderMazeGeneratorOLD aldousGenerator = new AldousBorderMazeGeneratorOLD(20);
 
     @BeforeEach
     void setUp() throws Exception {
@@ -22,7 +22,7 @@ class MazeSolverTest {
     void test() {
         MazeSolver solver = new MazeSolver();
        
-        solver.solveMaze(aldousGenerator.getMaze());
+      //  solver.solveMaze(aldousGenerator.getMaze());
   
     }
 

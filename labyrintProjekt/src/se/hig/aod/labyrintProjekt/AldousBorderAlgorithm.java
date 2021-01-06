@@ -3,14 +3,31 @@ package se.hig.aod.labyrintProjekt;
 import java.util.Collections;
 import java.util.Random;
 
+/**
+ * Implementationen utav AldousBorder algoritmen.
+ * @author Andreas Roghe
+ * @author Sofia Ågren
+ * @version 2020-01-06
+ */
+
 public class AldousBorderAlgorithm extends AbstractGenerator {
 
-    public AldousBorderAlgorithm(int size) {
+    /**
+     * Antal möjliga riktningar.
+     */
+    private static final int POSSIBLE_ROADS = 4;
+
+    /**
+     * Konstruktorn för att bygga upp grunden utav labyrinten. Samtliga celler fylls
+     * upp med X och varannan cell markeras som en besöksbar cell.
+     * @param size
+     */
+    public AldousBorderAlgorithm(final int size) {
         super(size);
     }
 
     @Override
-    void algorithm(Cell[][] maze) {
+    void algorithm(final Cell[][] maze) {
         Collections.shuffle(unvisitedCells);
         Cell current = unvisitedCells.remove(0);
         current.visited = true;
@@ -18,7 +35,7 @@ public class AldousBorderAlgorithm extends AbstractGenerator {
 
         while (unvisitedCells.size() > 0) {
             Random random = new Random();
-            int randomDirection = random.nextInt(4);
+            int randomDirection = random.nextInt(POSSIBLE_ROADS);
             Cell potentialWall;
             switch (DIRECTIONS[randomDirection]) {
             case "NORTH":
@@ -32,7 +49,7 @@ public class AldousBorderAlgorithm extends AbstractGenerator {
                     current = maze[x][y];
                     y = y + 1;
                     potentialWall = maze[x][y];
-                    if (current.visited == false) {
+                    if (!current.visited) {
                         current.format = endPoint;
                         potentialWall.format = "  ";
                         current.visited = true;
@@ -52,7 +69,7 @@ public class AldousBorderAlgorithm extends AbstractGenerator {
                     current = maze[x][y];
                     y = current.y - 1;
                     potentialWall = maze[x][y];
-                    if (current.visited == false) {
+                    if (!current.visited) {
                         current.format = endPoint;
                         potentialWall.format = "  ";
                         current.visited = true;
@@ -71,7 +88,7 @@ public class AldousBorderAlgorithm extends AbstractGenerator {
                     current = maze[x][y];
                     x = x + 1;
                     potentialWall = maze[x][y];
-                    if (current.visited == false) {
+                    if (!current.visited) {
                         current.format = endPoint;
                         potentialWall.format = "  ";
                         current.visited = true;
@@ -90,7 +107,7 @@ public class AldousBorderAlgorithm extends AbstractGenerator {
                     current = maze[x][y];
                     x = x - 1;
                     potentialWall = maze[x][y];
-                    if (current.visited == false) {
+                    if (!current.visited) {
                         current.format = endPoint;
                         potentialWall.format = "  ";
                         current.visited = true;
@@ -98,6 +115,8 @@ public class AldousBorderAlgorithm extends AbstractGenerator {
 
                     }
                 }
+                break;
+            default:
                 break;
             }
         }

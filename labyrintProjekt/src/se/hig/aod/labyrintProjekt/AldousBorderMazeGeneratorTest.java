@@ -1,14 +1,18 @@
 package se.hig.aod.labyrintProjekt;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class AldousBorderMazeGeneratorTest {
-    
-    AldousBorderMazeGeneratorOLD generator = new AldousBorderMazeGeneratorOLD(1000);
+    /**
+     * Storleken på labyrinten vi vill skapa.
+     */
+    private static final int SIZE = 100;
+    /**
+     * Skapar en labyrint om 100x100.
+     */
+    private Maze generator = new AldousBorderAlgorithm(SIZE);
 
     @BeforeEach
     void setUp() throws Exception {
@@ -20,7 +24,14 @@ class AldousBorderMazeGeneratorTest {
 
     @Test
     void test() {
-        generator.printMaze();
+        String[][] maze = generator.getMaze();
+
+        for (int i = 0; i < maze.length; i++) {
+            for (int j = 0; j < maze.length; j++) {
+                System.out.print(maze[i][j]);
+            }
+            System.out.println();
+        }
     }
 
 }
