@@ -27,7 +27,7 @@ public class MazeSolver implements Solver {
 
     /**
      * Klassen som håller reda på den aktuella informationen om en specifik väg som
-     * är en väg i labyrinten.
+     * är en väg i labyrinten.  
      * @author Andreas Roghe
      * @author Sofia Ågren
      * @version 2021-12-19
