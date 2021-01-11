@@ -86,26 +86,28 @@ public final class MazeRunner {
             case 1:
                 long start = System.currentTimeMillis();
                 df = new DepthFirstSearch(size);
-                System.out.printf("Time to create maze: %dms\n",System.currentTimeMillis() - start);
+                System.out.printf("Time to create maze: %dms\n",
+                        System.currentTimeMillis() - start);
                 printToFile(df.getMaze(), name);
                 break;
 
             case 2:
                 start = System.currentTimeMillis();
                 aldousBorder = new AldousBorderAlgorithm(size);
-                System.out.printf("Time to create maze: %dms\n",System.currentTimeMillis() - start);
+                System.out.printf("Time to create maze: %dms\n",
+                        System.currentTimeMillis() - start);
                 printToFile(aldousBorder.getMaze(), name);
                 break;
             default:
-                System.out
-                        .println("Nothing selected. Generating maze with depth-first recursion.");
+                System.out.println(
+                        "Nothing selected. Generating maze with depth-first recursion.");
                 df = new DepthFirstSearch(size);
                 printToFile(df.getMaze(), name);
                 break;
             }
             break;
         }
-        case "import":{
+        case "import": {
             System.out.println("The file needs to be in the folder 'Labyrint'.");
             System.out.println("Name of file:");
             name = keyBoard.next();
@@ -174,7 +176,7 @@ public final class MazeRunner {
             for (int j = 0; j < maze.length; j++) {
                 try {
                     char a = (char) inChar.read();
-                    if(a == '\n') {
+                    if (a == '\n') {
                         a = (char) inChar.read();
                     }
                     if (a == '\r') {
