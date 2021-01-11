@@ -62,44 +62,58 @@ public final class MazeRunner {
     }
 
     private static String chooseMaze() {
-        System.out.println("Choose maze generator algorithm: ");
-        System.out.println("1. DepthFirst");
-        System.out.println("2. Aldous-Border");
-        int choice = keyBoard.nextInt();
-        System.out.println("Choose size of maze:");
-        int size;
-        if (keyBoard.hasNextInt()) {
-            size = keyBoard.nextInt();
-        } else {
-            System.out.println("No size selected, generating with default size 10x10.");
-            size = DEFAULT_SIZE;
+        System.out.println("Create new maze or import? Type 'new' or 'import'.");
+        String importChoice = keyBoard.next();
+        String name = null;
+        switch (importChoice) {
+        case "new": {
+            System.out.println("Choose maze generator algorithm: ");
+            System.out.println("1. DepthFirst");
+            System.out.println("2. Aldous-Border");
+            int choice = keyBoard.nextInt();
+            System.out.println("Choose size of maze:");
+            int size;
+            if (keyBoard.hasNextInt()) {
+                size = keyBoard.nextInt();
+            } else {
+                System.out.println("No size selected, generating with default size 10x10.");
+                size = DEFAULT_SIZE;
+            }
+            System.out.println("Name your maze:");
+            name = keyBoard.next();
+
+            switch (choice) {
+            case 1:
+                long start = System.currentTimeMillis();
+                df = new DepthFirstSearch(size);
+                System.out.printf("Time to create maze: %dms\n",System.currentTimeMillis() - start);
+                printToFile(df.getMaze(), name);
+                break;
+
+            case 2:
+                start = System.currentTimeMillis();
+                aldousBorder = new AldousBorderAlgorithm(size);
+                System.out.printf("Time to create maze: %dms\n",System.currentTimeMillis() - start);
+                printToFile(aldousBorder.getMaze(), name);
+                break;
+            default:
+                System.out
+                        .println("Nothing selected. Generating maze with depth-first recursion.");
+                df = new DepthFirstSearch(size);
+                printToFile(df.getMaze(), name);
+                break;
+            }
+            break;
         }
-
-        System.out.println("Name your maze:");
-        String name = keyBoard.next();
-
-        switch (choice) {
-        case 1:
-            long start = System.currentTimeMillis();
-            df = new DepthFirstSearch(size);
-            System.out.printf("Time to create maze: %dms\n",System.currentTimeMillis() - start);
-            printToFile(df.getMaze(), name);
+        case "import":{
+            System.out.println("The file needs to be in the folder 'Labyrint'.");
+            System.out.println("Name of file:");
+            name = keyBoard.next();
             break;
-
-        case 2:
-            start = System.currentTimeMillis();
-            aldousBorder = new AldousBorderAlgorithm(size);
-            System.out.printf("Time to create maze: %dms\n",System.currentTimeMillis() - start);
-            printToFile(aldousBorder.getMaze(), name);
-            break;
+        }
         default:
-            System.out
-                    .println("Nothing selected. Generating maze with depth-first recursion.");
-            df = new DepthFirstSearch(size);
-            printToFile(df.getMaze(), name);
-            break;
+            throw new IllegalArgumentException("Unexpected value: " + importChoice);
         }
-
         return name;
     }
 
@@ -160,6 +174,9 @@ public final class MazeRunner {
             for (int j = 0; j < maze.length; j++) {
                 try {
                     char a = (char) inChar.read();
+                    if(a == '\n') {
+                        a = (char) inChar.read();
+                    }
                     if (a == '\r') {
                         a = (char) inChar.read();
                         if (a == '\n') {
